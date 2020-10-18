@@ -31,8 +31,9 @@ class PrototypesController < ApplicationController
 
   def edit
     @prototype = Prototype.find(params[:id])
-    unless current_user == @prototype.user_id
+    unless current_user == @prototype.user
       redirect_to root_path
+    end
   end
 
   def update
@@ -51,9 +52,10 @@ class PrototypesController < ApplicationController
   end
 
   private
+
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
     #mergeの内容が分からんので後で変更あるかも
   end
-
 end
+
